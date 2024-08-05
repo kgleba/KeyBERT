@@ -19,7 +19,10 @@ except ModuleNotFoundError:
     sklearn_version = "1.5.1"
 
 
-    def cosine_similarity(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+    def cosine_similarity(A: np.ndarray, B: np.ndarray = None) -> np.ndarray:
+        if B is None:
+            B = A.copy()
+
         K = np.zeros(shape=(len(A), len(B)))
 
         for i, sample_A in enumerate(A):
