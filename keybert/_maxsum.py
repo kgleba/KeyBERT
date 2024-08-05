@@ -1,7 +1,12 @@
-import numpy as np
 import itertools
-from sklearn.metrics.pairwise import cosine_similarity
 from typing import List, Tuple
+
+import numpy as np
+
+try:
+    from sklearn.metrics.pairwise import cosine_similarity
+except ModuleNotFoundError:
+    from keybert._model import cosine_similarity
 
 
 def max_sum_distance(

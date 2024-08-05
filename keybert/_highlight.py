@@ -1,7 +1,7 @@
 from typing import Tuple, List
 from rich.console import Console
 from rich.highlighter import RegexHighlighter
-from sklearn.feature_extraction.text import CountVectorizer
+from keybert._model import CountVectorizer
 
 
 class NullHighlighter(RegexHighlighter):

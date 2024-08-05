@@ -39,7 +39,6 @@ classifiers = [
 dependencies = [
     "numpy==1.26.4",
     "rich>=10.4.0",
-    "scikit-learn>=0.22.2",
     "tokenizers>=0.19.1",
     "onnxruntime>=1.18.1"
 ]

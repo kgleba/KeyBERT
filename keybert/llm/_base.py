@@ -1,4 +1,8 @@
-from sklearn.base import BaseEstimator
+from contextlib import suppress
+
+with suppress(ModuleNotFoundError):
+    from sklearn.base import BaseEstimator
+
 from typing import List
 
 

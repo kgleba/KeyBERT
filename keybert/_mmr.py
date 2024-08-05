@@ -1,7 +1,12 @@
-import numpy as np
 from operator import itemgetter
 from typing import List, Tuple
-from sklearn.metrics.pairwise import cosine_similarity
+
+import numpy as np
+
+try:
+    from sklearn.metrics.pairwise import cosine_similarity
+except ModuleNotFoundError:
+    from keybert._model import cosine_similarity
 
 
 def mmr(

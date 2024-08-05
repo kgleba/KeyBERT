@@ -8,9 +8,58 @@ import numpy as np
 from typing import List, Union, Tuple
 
 from packaging import version
-from sklearn import __version__ as sklearn_version
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.feature_extraction.text import CountVectorizer
+
+try:
+    from sklearn import __version__ as sklearn_version
+    from sklearn.metrics.pairwise import cosine_similarity
+    from sklearn.feature_extraction.text import CountVectorizer
+except ModuleNotFoundError:
+    import spacy
+
+    sklearn_version = "1.5.1"
+
+
+    def cosine_similarity(A: np.ndarray, B: np.ndarray) -> np.ndarray:
+        K = np.zeros(shape=(len(A), len(B)))
+
+        for i, sample_A in enumerate(A):
+            for j, sample_B in enumerate(B):
+                dot_product = np.dot(sample_A, sample_B)
+                magnitude_A = np.linalg.norm(sample_A)
+                magnitude_B = np.linalg.norm(sample_B)
+
+                K[i][j] = dot_product / (magnitude_A * magnitude_B)
+
+        return K
+
+
+    class CountVectorizer:
+        def __init__(self, *args, **kwargs) -> None:
+            self.nlp = spacy.load("en_core_web_sm")
+            self.doc = ""
+            self.feature_names = []
+
+        def fit(self, docs: list[str]) -> 'CountVectorizer':
+            if len(docs) != 1:
+                raise NotImplementedError(
+                    "Cheap dummy implementation does not support multiple docs (although it could)")
+
+            self.doc = docs[0]
+
+            return self
+
+        def get_feature_names_out(self) -> list[str]:
+            self.feature_names = [token.text.lower() for token in self.nlp(self.doc) if
+                                  not token.is_stop and not token.is_punct]
+
+            return self.feature_names
+
+        def transform(self, docs: list[str]) -> np.ndarray:
+            if len(docs) != 1 or docs[0] != self.doc:
+                raise NotImplementedError(
+                    "Cheap dummy implementation does not support multiple or alternative docs (although it could)")
+
+            return np.array([[[1] * len(self.feature_names)]])
 
 from keybert._mmr import mmr
 from keybert._maxsum import max_sum_distance
