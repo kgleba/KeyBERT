@@ -65,9 +65,9 @@ from keybert._mmr import mmr
 from keybert._maxsum import max_sum_distance
 from keybert._highlight import highlight_document
 from keybert.backend._utils import select_backend
-from keybert.llm._base import BaseLLM
-from keybert import KeyLLM
 
+BaseLLM = None
+KeyLLM = None
 
 class KeyBERT:
     """A minimal method for keyword extraction with BERT.
