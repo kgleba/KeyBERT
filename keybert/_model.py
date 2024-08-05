@@ -66,7 +66,7 @@ from keybert._maxsum import max_sum_distance
 from keybert._highlight import highlight_document
 from keybert.backend._utils import select_backend
 
-BaseLLM = None
+BaseLLM = type
 KeyLLM = None
 
 class KeyBERT:
